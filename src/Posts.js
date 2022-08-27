@@ -53,21 +53,20 @@ const Posts = () => {
   }, []);
 
   return (
-
+    
     <InfiniteScroll
       hasMoreData={hasMoreData}
       isLoading={loading}
       onBottomHit={loadMorePosts}
       loadOnMount={true}
     >
-          <StyledPosts>
-
+      <StyledPosts>
         {
           posts.map((post, index) => {
             return <Post fullName={post.camera.full_name} landingDate={post.rover.landing_date} launchDate={post.rover.launch_date} />
           }
           )}
-    </StyledPosts>
+      </StyledPosts>
 
     </InfiniteScroll>
   )
