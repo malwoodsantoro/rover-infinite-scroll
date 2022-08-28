@@ -25,7 +25,7 @@ const InfiniteScroll = ({onBottomHit, isLoading, hasMoreData, loadOnMount, child
     const onScroll = () => {
 
       if (!isLoading && hasMoreData && isBottom(contentRef)) {
-        console.log('hit botto')
+        console.log('hit bottom!')
         onBottomHit();
     
       }
