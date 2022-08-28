@@ -63,7 +63,7 @@ const Posts = () => {
         });
     }, []);
     return ((0, jsx_runtime_1.jsx)(InfiniteScroll_1.default, Object.assign({ hasMoreData: hasMoreData, isLoading: loading, onBottomHit: loadMorePosts, loadOnMount: true }, { children: (0, jsx_runtime_1.jsx)(StyledPosts, { children: posts.map((post, index) => {
-                return (0, jsx_runtime_1.jsx)(Post_1.default, { fullName: "ok", landingDate: post.rover.landing_date, launchDate: post.rover.launch_date });
+                return (0, jsx_runtime_1.jsx)(Post_1.default, { fullName: post.camera.full_name, landingDate: post.rover.landing_date, launchDate: post.rover.launch_date });
             }) }) })));
 };
 exports.default = Posts;
