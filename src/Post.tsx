@@ -1,27 +1,46 @@
 import React from 'react'
 import styled from 'styled-components'
+import ImgModal from './ImgModal'
+import useModal from './useModal';
+
+
+interface PostProps  {
+  fullName: string,
+  landingDate: string,
+  launchDate: string,
+  imgSrc: string
+}
 
 const StyledPost = styled.div`
-  background-color: lightblue;
+  border: solid 1px black;
   display: flex;
   flex-direction: column;
   margin: 0.25rem;
   padding: 2rem;
 `
-type PostProps = {
-  fullName: string,
-  landingDate: string,
-  launchDate: string
-}
 
-const Post = ({fullName, landingDate, launchDate}: PostProps) => {
+const Img = styled.img`
+  width: 100%;
+  object-fit: cover;
+`
+
+const Post = ({fullName, landingDate, launchDate, imgSrc}: PostProps) => {
+
+  const { isShowing, toggle } = useModal(); 
 
   return (
     <StyledPost>
-      <h2>{fullName}</h2>
+      <Img src={imgSrc} alt={`Rover photo taken on ${landingDate}`} onClick={() => toggle()}/>
       <p>Launch date: {launchDate}</p>
       <p>Landing date: {landingDate}</p>
+      <p>{fullName}</p>
+      <ImgModal
+        isShowing={isShowing}
+        hide={toggle}
+        src={imgSrc}
+      />
     </StyledPost>
+
   )
 }
 
