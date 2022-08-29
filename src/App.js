@@ -6,7 +6,8 @@ import Posts from './Posts'
 function App() {
   return (
     <div className="App">
-      <h1>Mars Rover Photos</h1>
+      <h1>Rovergram</h1>
+      <p>Images taken from NASA's Curiosity, Opportunity, and Spirit rovers on Mars.</p> 
       <Posts />
     </div>
   );

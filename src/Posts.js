@@ -18,6 +18,7 @@ const react_1 = require("react");
 const Post_1 = __importDefault(require("./Post"));
 const InfiniteScroll_1 = __importDefault(require("./InfiniteScroll"));
 const styled_components_1 = __importDefault(require("styled-components"));
+const react_select_1 = __importDefault(require("react-select"));
 var CameraName;
 (function (CameraName) {
     CameraName["Fhaz"] = "FHAZ";
@@ -27,7 +28,14 @@ var CameraName;
 var RoverName;
 (function (RoverName) {
     RoverName["Curiosity"] = "Curiosity";
+    RoverName["Opportunity"] = "Opportunity";
+    RoverName["Spirit"] = "Spirit";
 })(RoverName = exports.RoverName || (exports.RoverName = {}));
+const selectOptions = [
+    { value: 'curiosity', label: 'Curiosity' },
+    { value: 'spirit', label: 'Spirit' },
+    { value: 'opportunity', label: 'Opportunity' }
+];
 const StyledPosts = styled_components_1.default.div `
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -43,14 +51,15 @@ const Posts = () => {
     const [posts, setPosts] = (0, react_1.useState)([]);
     const [loading, setLoading] = (0, react_1.useState)(false);
     const [page, setPage] = (0, react_1.useState)(1);
+    const [selectedValue, setSelectedValue] = (0, react_1.useState)(selectOptions[0]);
     const hasMoreData = posts.length < 2000;
     const handleErrors = (response) => {
         if (!response.ok)
             throw new Error(response.status.toString());
         return response;
     };
-    const fetchPosts = (page) => __awaiter(void 0, void 0, void 0, function* () {
-        const data = yield fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=${page}&api_key=` + process.env.REACT_APP_NASA_KEY).then((res) => {
+    const fetchPosts = (page, rover) => __awaiter(void 0, void 0, void 0, function* () {
+        const data = yield fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/${rover}/photos?sol=1000&page=${page}&api_key=` + process.env.REACT_APP_NASA_KEY).then((res) => {
             handleErrors(res);
             return res.json();
         });
@@ -60,7 +69,7 @@ const Posts = () => {
         setPage((page) => page + 1);
         setLoading(true);
         setTimeout(() => {
-            fetchPosts(page)
+            fetchPosts(page, selectedValue.value)
                 .then((data) => {
                 setPosts((prev) => [...prev, ...data.photos]);
             });
@@ -68,13 +77,23 @@ const Posts = () => {
         }, 300);
     };
     (0, react_1.useEffect)(() => {
-        fetchPosts(1)
+        fetchPosts(1, selectedValue.value)
             .then((data) => {
             setPosts(data.photos);
         });
     }, []);
-    return ((0, jsx_runtime_1.jsx)(InfiniteScroll_1.default, Object.assign({ hasMoreData: hasMoreData, isLoading: loading, onBottomHit: loadMorePosts, loadOnMount: true }, { children: (0, jsx_runtime_1.jsx)(StyledPosts, { children: posts.map((post, index) => {
-                return (0, jsx_runtime_1.jsx)(Post_1.default, { fullName: post.camera.full_name, landingDate: post.rover.landing_date, launchDate: post.rover.launch_date, imgSrc: post.img_src });
-            }) }) })));
+    (0, react_1.useEffect)(() => {
+        fetchPosts(1, selectedValue.value)
+            .then((data) => {
+            setPosts(data.photos);
+        });
+    }, [selectedValue]);
+    //@ts-ignore
+    const handleSelectChange = (item) => {
+        setSelectedValue(item);
+    };
+    return ((0, jsx_runtime_1.jsxs)(InfiniteScroll_1.default, Object.assign({ hasMoreData: hasMoreData, isLoading: loading, onBottomHit: loadMorePosts, loadOnMount: true }, { children: [(0, jsx_runtime_1.jsx)(react_select_1.default, { value: selectedValue, options: selectOptions, onChange: handleSelectChange }), (0, jsx_runtime_1.jsx)(StyledPosts, { children: posts.map((post, index) => {
+                    return (0, jsx_runtime_1.jsx)(Post_1.default, { roverName: post.rover.name, fullName: post.camera.full_name, landingDate: post.rover.landing_date, launchDate: post.rover.launch_date, imgSrc: post.img_src });
+                }) })] })));
 };
 exports.default = Posts;

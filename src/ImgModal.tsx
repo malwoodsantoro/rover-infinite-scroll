@@ -34,7 +34,7 @@ const ModalWrapper = styled.div`
 
 const ModalMain = styled.div`
   z-index: 100;
-  width: 20rem;
+  width: 40rem;
   background: white;
   position: relative;
   margin: 10rem auto;

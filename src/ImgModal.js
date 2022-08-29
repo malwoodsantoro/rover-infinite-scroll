@@ -30,7 +30,7 @@ const ModalWrapper = styled_components_1.default.div `
 `;
 const ModalMain = styled_components_1.default.div `
   z-index: 100;
-  width: 20rem;
+  width: 40rem;
   background: white;
   position: relative;
   margin: 10rem auto;

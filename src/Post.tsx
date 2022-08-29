@@ -5,6 +5,7 @@ import useModal from './useModal';
 
 
 interface PostProps  {
+  roverName: string,
   fullName: string,
   landingDate: string,
   launchDate: string,
@@ -24,12 +25,13 @@ const Img = styled.img`
   object-fit: cover;
 `
 
-const Post = ({fullName, landingDate, launchDate, imgSrc}: PostProps) => {
+const Post = ({roverName, fullName, landingDate, launchDate, imgSrc}: PostProps) => {
 
   const { isShowing, toggle } = useModal(); 
 
   return (
     <StyledPost>
+      <h3>{roverName}</h3>
       <Img src={imgSrc} alt={`Rover photo taken on ${landingDate}`} onClick={() => toggle()}/>
       <p>Launch date: {launchDate}</p>
       <p>Landing date: {landingDate}</p>
