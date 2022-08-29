@@ -1,14 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
-// @ts-nocheck
 const react_1 = require("react");
 const isBottom = (ref) => {
-    console.log(ref.current);
     if (!ref.current) {
         return false;
     }
-    console.log(ref.current.getBoundingClientRect().bottom);
     return ref.current.getBoundingClientRect().bottom <= window.innerHeight;
 };
 const InfiniteScroll = ({ onBottomHit, isLoading, hasMoreData, loadOnMount, children }) => {
@@ -23,7 +20,6 @@ const InfiniteScroll = ({ onBottomHit, isLoading, hasMoreData, loadOnMount, chil
     (0, react_1.useEffect)(() => {
         const onScroll = () => {
             if (!isLoading && hasMoreData && isBottom(contentRef)) {
-                console.log('hit bottom!');
                 onBottomHit();
             }
         };

@@ -1,21 +1,24 @@
+import { useState, useEffect, useRef, RefObject} from 'react'
 
-// @ts-nocheck
+interface InfiniteScrollProps {
+  onBottomHit: Function, 
+  isLoading: boolean, 
+  hasMoreData: boolean, 
+  loadOnMount: boolean, 
+  children: JSX.Element[] | JSX.Element
+}
 
-import { useState, useEffect, useRef} from 'react'
-
-const isBottom = (ref) => {
- console.log(ref.current)
+const isBottom = (ref: RefObject<HTMLDivElement>) => {
   if (!ref.current) {
     return false;
   }
-  console.log(ref.current.getBoundingClientRect().bottom)
   return ref.current.getBoundingClientRect().bottom <= window.innerHeight;
 }
 
-const InfiniteScroll = ({onBottomHit, isLoading, hasMoreData, loadOnMount, children}) => {
+const InfiniteScroll = ({onBottomHit, isLoading, hasMoreData, loadOnMount, children}: InfiniteScrollProps) => {
 
   const [initialLoad, setInitialLoad] = useState(true);
-  const contentRef = useRef(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (loadOnMount && initialLoad) {
@@ -26,9 +29,7 @@ const InfiniteScroll = ({onBottomHit, isLoading, hasMoreData, loadOnMount, child
 
   useEffect(() => {
     const onScroll = () => {
-
       if (!isLoading && hasMoreData && isBottom(contentRef)) {
-        console.log('hit bottom!')
         onBottomHit();
     
       }

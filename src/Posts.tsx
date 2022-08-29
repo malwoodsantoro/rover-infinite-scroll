@@ -61,53 +61,58 @@ const Posts = () => {
 
   const hasMoreData = posts.length < 2000;
 
-// @ts-ignore
-  const handleErrors = (response) => {
-    if (!response.ok) throw new Error(response.status);
+  const handleErrors = (response: Response) => {
+    if (!response.ok) throw new Error(response.status.toString())
     return response;
   }
 
-  const loadMorePosts = () => {
-    setPage((page) => page + 1);
-    setLoading(true);
-    setTimeout(() => {
-      fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=${page}&api_key=` + process.env.REACT_APP_NASA_KEY)
-        .then(handleErrors)
-        .then((response) => response.json())
-        .then((data : Posts) => {
-          // @ts-ignore
-          setPosts((prev) => [...prev, ...data.photos])
-        })
-      setLoading(false);
-    }, 300);
+  const fetchPosts = async (page: number): Promise<Posts> => {
+    const data = await fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=${page}&api_key=` + process.env.REACT_APP_NASA_KEY).then((res) => {
+      handleErrors(res)
+      return res.json();
+    });
+
+    return data;
   };
 
-  useEffect(() => {
-    fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=1&api_key=` + process.env.REACT_APP_NASA_KEY)
-      .then(response => response.json())
-      .then((data) => {
-        setPosts(data.photos)
+const loadMorePosts = () => {
+  setPage((page) => page + 1);
+  setLoading(true);
+  setTimeout(() => {
+    fetchPosts(page)
+      .then((data: Posts) => {
+        setPosts((prev) => [...prev, ...data.photos])
       })
+    setLoading(false);
+  }, 300);
+};
 
-  }, []);
+useEffect(() => {
+  fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=1&api_key=` + process.env.REACT_APP_NASA_KEY)
+    .then(response => response.json())
+    .then((data) => {
+      setPosts(data.photos)
+    })
 
-  return (
-    <InfiniteScroll
-      hasMoreData={hasMoreData}
-      isLoading={loading}
-      onBottomHit={loadMorePosts}
-      loadOnMount={true}
-    >
-      <StyledPosts>
-        {
-          posts.map((post, index) => {
-            return <Post fullName={post.camera.full_name} landingDate={post.rover.landing_date} launchDate={post.rover.launch_date} />
-          }
-          )}
-      </StyledPosts>
+}, []);
 
-    </InfiniteScroll>
-  )
+return (
+  <InfiniteScroll
+    hasMoreData={hasMoreData}
+    isLoading={loading}
+    onBottomHit={loadMorePosts}
+    loadOnMount={true}
+  >
+    <StyledPosts>
+      {
+        posts.map((post, index) => {
+          return <Post fullName={post.camera.full_name} landingDate={post.rover.landing_date} launchDate={post.rover.launch_date} />
+        }
+        )}
+    </StyledPosts>
+
+  </InfiniteScroll>
+)
 }
 
 export default Posts
