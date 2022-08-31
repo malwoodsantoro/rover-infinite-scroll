@@ -1,15 +1,14 @@
-import React from 'react'
-import styled from 'styled-components'
-import ImgModal from './ImgModal'
-import useModal from './useModal';
+import React from "react";
+import styled from "styled-components";
+import ImgModal from "./ImgModal";
+import useModal from "./useModal";
 
-
-interface PostProps  {
-  roverName: string,
-  fullName: string,
-  landingDate: string,
-  launchDate: string,
-  imgSrc: string
+interface PostProps {
+  roverName: string;
+  fullName: string;
+  landingDate: string;
+  launchDate: string;
+  imgSrc: string;
 }
 
 const StyledPost = styled.div`
@@ -18,32 +17,36 @@ const StyledPost = styled.div`
   flex-direction: column;
   margin: 0.25rem;
   padding: 2rem;
-`
+`;
 
 const Img = styled.img`
   width: 100%;
   object-fit: cover;
-`
+`;
 
-const Post = ({roverName, fullName, landingDate, launchDate, imgSrc}: PostProps) => {
-
-  const { isShowing, toggle } = useModal(); 
+const Post = ({
+  roverName,
+  fullName,
+  landingDate,
+  launchDate,
+  imgSrc,
+}: PostProps) => {
+  const { isShowing, toggle } = useModal();
 
   return (
     <StyledPost>
       <h3>{roverName}</h3>
-      <Img src={imgSrc} alt={`Rover photo taken on ${landingDate}`} onClick={() => toggle()}/>
+      <Img
+        src={imgSrc}
+        alt={`Rover photo taken on ${landingDate}`}
+        onClick={() => toggle()}
+      />
       <p>Launch date: {launchDate}</p>
       <p>Landing date: {landingDate}</p>
       <p>{fullName}</p>
-      <ImgModal
-        isShowing={isShowing}
-        hide={toggle}
-        src={imgSrc}
-      />
+      <ImgModal isShowing={isShowing} hide={toggle} src={imgSrc} />
     </StyledPost>
+  );
+};
 
-  )
-}
-
-export default Post
+export default Post;

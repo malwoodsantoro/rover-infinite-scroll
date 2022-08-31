@@ -1,12 +1,11 @@
-
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import styled from "styled-components";
 
 interface ImgModalProps {
-  isShowing: boolean,
-  hide: Function,
-  src: string
+  isShowing: boolean;
+  hide: Function;
+  src: string;
 }
 
 const ModalOverlay = styled.div`
@@ -17,8 +16,8 @@ const ModalOverlay = styled.div`
   width: 100vw;
   height: 100vh;
   background-color: #000;
-  opacity: .5;
-`
+  opacity: 0.5;
+`;
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -30,7 +29,7 @@ const ModalWrapper = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   outline: 0;
-`
+`;
 
 const ModalMain = styled.div`
   z-index: 100;
@@ -44,33 +43,37 @@ const ModalMain = styled.div`
   > p {
     color: gray;
   }
-`
+`;
 
 const ModalCloseButton = styled.div`
   font-size: 1.4rem;
   font-weight: 700;
   line-height: 1;
   color: #000;
-  opacity: .3;
+  opacity: 0.3;
   cursor: pointer;
   border: none;
-`
+`;
 const Img = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-`
+`;
 
-const ImgModal = ({ isShowing, hide, src }: ImgModalProps) => isShowing ? ReactDOM.createPortal(
-  <React.Fragment>
-    <ModalOverlay />
-    <ModalWrapper>
-      <ModalMain>
-        <ModalCloseButton onClick={() => hide()}>X</ModalCloseButton>
-        <Img src={src} alt={`Large photo`} />
-      </ModalMain>
-    </ModalWrapper>
-  </React.Fragment>, document.body
-) : null;
+const ImgModal = ({ isShowing, hide, src }: ImgModalProps) =>
+  isShowing
+    ? ReactDOM.createPortal(
+        <React.Fragment>
+          <ModalOverlay />
+          <ModalWrapper>
+            <ModalMain>
+              <ModalCloseButton onClick={() => hide()}>X</ModalCloseButton>
+              <Img src={src} alt={`Large photo`} />
+            </ModalMain>
+          </ModalWrapper>
+        </React.Fragment>,
+        document.body
+      )
+    : null;
 
 export default ImgModal;
