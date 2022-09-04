@@ -35,7 +35,6 @@ const Post = ({
 
   return (
     <StyledPost>
-      <h3>{roverName}</h3>
       <Img
         src={imgSrc}
         alt={`Rover photo taken on ${landingDate}`}

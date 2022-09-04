@@ -8,7 +8,7 @@ const isBottom = (ref) => {
     }
     return ref.current.getBoundingClientRect().bottom <= window.innerHeight;
 };
-const InfiniteScroll = ({ onBottomHit, isLoading, hasMoreData, loadOnMount, children }) => {
+const InfiniteScroll = ({ onBottomHit, isLoading, hasMoreData, loadOnMount, children, }) => {
     const [initialLoad, setInitialLoad] = (0, react_1.useState)(true);
     const contentRef = (0, react_1.useRef)(null);
     (0, react_1.useEffect)(() => {
@@ -23,8 +23,8 @@ const InfiniteScroll = ({ onBottomHit, isLoading, hasMoreData, loadOnMount, chil
                 onBottomHit();
             }
         };
-        document.addEventListener('scroll', onScroll);
-        return () => document.removeEventListener('scroll', onScroll);
+        document.addEventListener("scroll", onScroll);
+        return () => document.removeEventListener("scroll", onScroll);
     }, [onBottomHit, isLoading, hasMoreData]);
     return (0, jsx_runtime_1.jsx)("div", Object.assign({ ref: contentRef }, { children: children }));
 };

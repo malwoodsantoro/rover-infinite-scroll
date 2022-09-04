@@ -11,3 +11,9 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.react-select {
+  box-shadow:  0 0 10px rgb(255, 252, 192);
+  margin-right: 0;
+}

@@ -18,8 +18,8 @@ const Img = styled_components_1.default.img `
   width: 100%;
   object-fit: cover;
 `;
-const Post = ({ roverName, fullName, landingDate, launchDate, imgSrc }) => {
+const Post = ({ roverName, fullName, landingDate, launchDate, imgSrc, }) => {
     const { isShowing, toggle } = (0, useModal_1.default)();
-    return ((0, jsx_runtime_1.jsxs)(StyledPost, { children: [(0, jsx_runtime_1.jsx)("h3", { children: roverName }), (0, jsx_runtime_1.jsx)(Img, { src: imgSrc, alt: `Rover photo taken on ${landingDate}`, onClick: () => toggle() }), (0, jsx_runtime_1.jsxs)("p", { children: ["Launch date: ", launchDate] }), (0, jsx_runtime_1.jsxs)("p", { children: ["Landing date: ", landingDate] }), (0, jsx_runtime_1.jsx)("p", { children: fullName }), (0, jsx_runtime_1.jsx)(ImgModal_1.default, { isShowing: isShowing, hide: toggle, src: imgSrc })] }));
+    return ((0, jsx_runtime_1.jsxs)(StyledPost, { children: [(0, jsx_runtime_1.jsx)(Img, { src: imgSrc, alt: `Rover photo taken on ${landingDate}`, onClick: () => toggle() }), (0, jsx_runtime_1.jsxs)("p", { children: ["Launch date: ", launchDate] }), (0, jsx_runtime_1.jsxs)("p", { children: ["Landing date: ", landingDate] }), (0, jsx_runtime_1.jsx)("p", { children: fullName }), (0, jsx_runtime_1.jsx)(ImgModal_1.default, { isShowing: isShowing, hide: toggle, src: imgSrc })] }));
 };
 exports.default = Post;

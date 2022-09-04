@@ -62,6 +62,15 @@ const StyledPosts = styled.div`
   }
 `;
 
+const StyledSelect = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem;
+  align-items: center;
+`;
+
 const Posts = () => {
   const [posts, setPosts] = useState<Photo[]>([]);
   const [loading, setLoading] = useState(false);
@@ -122,11 +131,15 @@ const Posts = () => {
       onBottomHit={loadMorePosts}
       loadOnMount={true}
     >
-      <Select
-        value={selectedValue}
-        options={selectOptions}
-        onChange={handleSelectChange}
-      />
+      <StyledSelect>
+        Choose a rover: 
+        <Select
+          className="react-select"
+          value={selectedValue}
+          options={selectOptions}
+          onChange={handleSelectChange}
+        />
+      </StyledSelect>
       <StyledPosts>
         {posts.map((post, index) => {
           return (
